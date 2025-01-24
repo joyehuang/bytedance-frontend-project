@@ -1,18 +1,22 @@
 <<<<<<< HEAD
+
 # bytedance-frontend-project
+
 =======
+
 # Chat Component
 
 一个基于 React 的聊天组件，支持内联与独立两种模式，能够处理多媒体输入，展示流式 LLM 响应。
 
 ## 技术栈
 
-- 框架：React 18 + TypeScript
-- 构建工具：Vite
-- 样式：TailwindCSS
-- 状态管理：Zustand
-- 代码规范：ESLint + Prettier
-- Git Hooks：Husky + lint-staged
+- 框架：[React 18](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
+- 构建工具：[Vite](https://vite.dev/)
+- 样式：[TailwindCSS](https://tailwindcss.com/docs/installation/using-vite)
+- 状态管理：[Zustand](https://awesomedevin.github.io/zustand-vue/docs/introduce/start/zustand)
+- 代码规范：[ESLint](https://eslint.org/) + [Prettier](https://prettier.io/)
+- Git Hooks：[Husky](https://typicode.github.io/husky/get-started.html) + [lint-staged](https://github.com/okonet/lint-staged)
+- 组件库：[shadcn/ui](https://ui.shadcn.com/)
 
 ## 开发环境要求
 
@@ -112,4 +116,4 @@ TypeScript 类型定义目录
    - 使用函数式组件
    - 合理使用 React Hooks
    - 遵循组件设计原则
->>>>>>> 43f06f9 (chore: project initialization)
+     > > > > > > > 43f06f9 (chore: project initialization)
