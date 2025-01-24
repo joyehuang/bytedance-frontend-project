@@ -1,5 +1,5 @@
-import React from 'react';
 import { useState } from 'react';
+import { Button } from '@/components/ui/button';
 import './App.css';
 
 function App() {
@@ -7,6 +7,7 @@ function App() {
 
   return (
     <div className="container">
+      <Button>Click me</Button>
       <h1>欢迎来到我的页面</h1>
       <div className="card">
         <input

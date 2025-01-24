@@ -31,6 +31,15 @@ module.exports = {
     settings: {
       react: {
         version: 'detect'
+      },
+      'import/resolver': {
+        typescript: {},
+        alias: {
+          map: [
+            ['@', './src'],
+          ],
+          extensions: ['.js', '.jsx', '.ts', '.tsx']
+        }
       }
     }
   }
