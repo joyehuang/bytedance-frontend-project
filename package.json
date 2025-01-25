@@ -10,13 +10,13 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,scss,md}\"",
-    "prepare": "husky"
+    "prepare": "husky install"
   },
   "dependencies": {
+    "@radix-ui/react-slot": "^1.1.1",
+    "class-variance-authority": "^0.7.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "shadcn-ui": "0.9.4",
-    "tailwindcss-animate": "^1.0.7",
     "zustand": "^5.0.3"
   },
   "devDependencies": {
@@ -36,6 +36,9 @@
     "clsx": "^2.1.1",
     "eslint": "^9.18.0",
     "eslint-config-prettier": "^10.0.1",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-import-resolver-typescript": "^3.7.0",
+    "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-prettier": "^5.2.3",
     "eslint-plugin-react": "^7.37.4",
     "eslint-plugin-react-hooks": "^5.1.0",
