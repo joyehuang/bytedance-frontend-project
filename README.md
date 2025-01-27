@@ -116,4 +116,3 @@ TypeScript 类型定义目录
    - 使用函数式组件
    - 合理使用 React Hooks
    - 遵循组件设计原则
-     > > > > > > > 43f06f9 (chore: project initialization)
