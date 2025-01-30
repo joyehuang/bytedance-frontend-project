@@ -1,0 +1,88 @@
+.inline-dialog {
+  display: none; /* 默认隐藏 */
+  position: absolute;
+  background: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.dialog-container {
+  position: absolute;
+  /* align-items: center;     */
+  width: 500px;
+  border: 3px #ccc;
+  border-radius: 10px;
+  height: 200px;
+  box-shadow: 0 0 10px 2px rgba(240, 242, 245, 0.5);
+}
+
+input {
+  border: none;
+}
+input:focus {
+  border: none;
+  outline: none;
+}
+input:focus::placeholder {
+  color: transparent; /* 聚焦时 placeholder 透明 */
+}
+.dialog-input {
+  position: relative;
+  margin: 20px;
+}
+
+.dialog-hr {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+  width: 100%;
+}
+
+.dialog-textarea {
+  width: 100%;
+  height: 60px;
+  resize: none;
+  border: none;
+  outline: none; /* 移除默认的聚焦轮廓 */
+  overflow: hidden;
+}
+
+.custom-hr {
+  border: 1px;
+  height: 1.5px;
+  width: 90%;
+  background: #f0f2f5;
+  margin: 20px 0;
+}
+
+.dialog-interact {
+  display: flex;
+  justify-content: space-between;
+  margin-right: 10px;
+}
+
+.dialog-file {
+  margin-left: 10px;
+  display: flex;
+  margin-left: 10px;
+}
+.dialog-icon {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.dialog-button {
+  display: flex;
+  align-items: center;
+  width: 110px;
+  height: 25px;
+  background-color: rgb(36, 118, 252);
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 10px;
+  color: white;
+  span {
+    margin-left: 5px;
+  }
+}
