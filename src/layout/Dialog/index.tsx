@@ -10,7 +10,7 @@ function Dialog() {
 
   const [textValue, setTextValue] = useState('');
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextValue(event.target.value); // 更新状态
   };
 
