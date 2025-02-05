@@ -3,8 +3,10 @@ import { SearchForm } from '@/components/Chat/shared/SearchForm';
 import { Plus, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sidebar, SidebarContent, SidebarHeader, SidebarFooter } from '@/components/ui/sidebar';
+import { useNavigate } from 'react-router-dom';
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const navigate = useNavigate();
   return (
     <Sidebar {...props} className=" bg-[#F7F8FA] shadow-sm border-transparent">
       <SidebarHeader>
@@ -24,7 +26,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarContent>
 
       <SidebarFooter className="flex items-center  mb-5">
-        <Button className="bg-blue-500 hover:bg-blue-600 w-55 flex items-center text-white rounded-[15px] shadow">
+        <Button
+          className="bg-blue-500 hover:bg-blue-600 w-55 flex items-center text-white rounded-[15px] shadow"
+          onClick={() => navigate('/empty')}
+        >
           <Plus /> Start new chat
         </Button>
       </SidebarFooter>

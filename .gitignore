@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 # API configuration
-src/lib/api.ts
+.env

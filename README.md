@@ -1,40 +1,23 @@
-<<<<<<< HEAD
-
-# bytedance-frontend-project
-
-=======
-
-# Chat Component
-
-一个基于 React 的聊天组件，支持内联与独立两种模式，能够处理多媒体输入，展示流式 LLM 响应。
+# 聊天组件开发指南
 
 ## 技术栈
 
-- 框架：[React 18](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
-- 构建工具：[Vite](https://vite.dev/)
-- 样式：[TailwindCSS](https://tailwindcss.com/docs/installation/using-vite)
-- 状态管理：[Zustand](https://awesomedevin.github.io/zustand-vue/docs/introduce/start/zustand)
-- 代码规范：[ESLint](https://eslint.org/) + [Prettier](https://prettier.io/)
-- Git Hooks：[Husky](https://typicode.github.io/husky/get-started.html) + [lint-staged](https://github.com/okonet/lint-staged)
-- 组件库：[shadcn/ui](https://ui.shadcn.com/)
+- 框架：React 18 + TypeScript
+- 构建工具：Vite
+- 样式：TailwindCSS
+- 状态管理：Zustand
+- 代码规范：ESLint + Prettier
+- Git Hooks：Husky + lint-staged
+- UI组件：shadcn/ui
 
-## 开发环境要求
+## 开发环境搭建
+
+### 环境要求
 
 - Node.js >= 16
 - pnpm >= 8
 
-## 项目结构
-
-```
-src/
-├── components/      # 组件目录
-├── hooks/          # 自定义hooks
-├── store/          # 状态管理
-├── types/          # TypeScript类型定义
-└── utils/          # 工具函数
-```
-
-## 安装和运行
+### 初始设置
 
 ```bash
 # 安装依赖
@@ -50,69 +33,79 @@ pnpm build
 pnpm preview
 ```
 
-## 代码规范
+### 必需的 VSCode 插件
 
-- 使用 ESLint 和 Prettier 进行代码规范检查和格式化
-- 提交前会自动运行 lint-staged 检查代码
+- ESLint
+- Prettier
+- Tailwind CSS IntelliSense
 
-```bash
-# 检查代码
-pnpm lint
+## 项目结构
 
-# 修复代码规范问题
-pnpm lint:fix
-
-# 格式化代码
-pnpm format
+```
+src/
+├── components/      # React组件
+├── hooks/          # 自定义hooks
+├── store/          # 状态管理
+├── types/          # TypeScript类型定义
+└── utils/          # 工具函数
 ```
 
-## 目录说明
+## 代码审查流程
 
-### components
+### 提交前检查清单
 
-组件目录，包含：
-
-- Chat/：聊天相关组件
-  - InlineChat/：内联聊天组件
-  - StandaloneChat/：独立聊天组件
-  - shared/：共享组件
-
-### hooks
-
-自定义 hooks 目录：
-
-- useChat：聊天逻辑
-- useStreamingResponse：流式响应
-- useMediaUpload：媒体上传
-
-### store
-
-状态管理目录：
-
-- 使用 Zustand 管理全局状态
-
-### types
-
-TypeScript 类型定义目录
-
-### utils
-
-工具函数目录
+- [ ] 运行 `pnpm lint` 并修复所有错误
+- [ ] 运行 `pnpm test` 确保所有测试通过
+- [ ] 确保提交信息符合规范
+- [ ] 在GitHub UI中进行自我审查
+- [ ] 必要时更新文档
 
 ## 开发规范
 
-1. 代码风格
+### 组件开发
 
-   - 使用 TypeScript 编写代码
-   - 遵循 ESLint 规范
-   - 使用 Prettier 格式化代码
-
-2. Git 提交
-
-   - 提交前会自动运行代码检查
-   - 建议使用规范的 commit message 格式
-
-3. 组件开发
+1. **结构规范**
    - 使用函数式组件
-   - 合理使用 React Hooks
-   - 遵循组件设计原则
+   - 使用TypeScript类型
+   - 一个文件一个组件
+   - 使用.tsx扩展名
+   - 使用相对单位
+
+## Git工作流
+
+### 分支策略
+
+- main: 生产环境代码
+- develop: 集成分支
+- feature/\*: 功能开发
+- fix/\*: 问题修复
+
+### 提交信息格式
+
+```
+type(scope): subject
+
+[可选 body]
+
+[可选 footer]
+```
+
+类型：
+
+- feat: 新功能
+- fix: 问题修复
+- docs: 文档更新
+- style: 代码格式化
+- refactor: 代码重构
+- perf: 性能优化
+- test: 测试相关
+- chore: 构建/工具相关
+- revert: 回滚提交
+
+示例：
+
+```
+feat(chat): 添加消息输入组件
+fix(api): 处理文件上传网络错误
+docs(readme): 更新安装指南
+```
