@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import { Paperclip, Image, Send } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 
-export function Dialog() {
+interface DialogProps {
+  handleUploadClick: () => void;
+}
+
+export function Dialog(props: DialogProps) {
   const [textValue, setTextValue] = useState('');
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -11,6 +15,10 @@ export function Dialog() {
 
   const handleClick = () => {
     console.log(textValue);
+  };
+
+  const uploadFile = () => {
+    props.handleUploadClick();
   };
 
   return (
@@ -25,7 +33,7 @@ export function Dialog() {
       <hr className="my-3 border border-gray-200" />
       <div className="flex justify-between items-center ">
         <div className="flex space-x-3 ">
-          <Paperclip className="cursor-pointer text-gray-500 scale-80" />
+          <Paperclip className="cursor-pointer text-gray-500 scale-80" onClick={uploadFile} />
           <Image className="cursor-pointer text-gray-500 scale-80" />
         </div>
         <button
