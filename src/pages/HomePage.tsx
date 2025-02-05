@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { AppSidebar } from './components/Chat/shared/AppSidebar';
+import { AppSidebar } from '@/components/Chat/shared/AppSidebar';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import Cookies from 'js-cookie';
 import { SearchForm } from '@/components/Chat/shared/SearchForm';
@@ -7,10 +7,12 @@ import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog } from '@/components/Chat/shared/Dialog';
+import { useNavigate } from 'react-router-dom';
 
 
 // { children }: { children: React.ReactNode }
-export default function App() {
+export default function HomePage() {
+  const navigate = useNavigate();
   const cookieValue = Cookies.get('sidebar:state');
   const defaultOpen = cookieValue === 'true';
   const [isSidebarOpen, setIsSidebarOpen] = useState(defaultOpen);
@@ -42,7 +44,7 @@ export default function App() {
     <div>
       <SidebarProvider defaultOpen={defaultOpen}>
         <AppSidebar className="relative" />
-        <main className=" w-full  h-full ">
+        <main className=" w-full  h-full">
           <SidebarTrigger
             className={`absolute ${isSidebarOpen ? 'left-[300px]' : 'left-[30px]'} hover:bg-gray-300 mt-6 scale-115 transition-all duration-300 ease-in-out`}
             onClick={toggleSidebar}
@@ -51,11 +53,13 @@ export default function App() {
           <header className="h-18 flex justify-center items-center shadow">
             <Button className="p-1 rounded-[10px] bg-[#F7F8FA] mr-3 h-8 w-13">Coze</Button>
             <SearchForm className="relative" />
-            <Button className="absolute bg-blue-500 hover:bg-blue-600 w-30 flex justify-center items-center text-white rounded-[15px] shadow ml-340">
+            <Button 
+            className="absolute bg-blue-500 hover:bg-blue-600 w-30 flex justify-center items-center text-white rounded-[15px] shadow ml-340"
+            onClick={() => navigate('/empty')}>
               <Plus /> New chat
             </Button>
           </header>
-
+        
           <Card
             className="fixed w-180 h-80 rounded-2xl shadow-md bg-[url('src/assets/dialogBg.jpg')] bg-cover border-0"
             style={{
