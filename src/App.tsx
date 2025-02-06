@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { AppSidebar } from './components/Chat/shared/AppSidebar';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+// import { MainPage } from './components/Chat/shared/MainPage';
 import Cookies from 'js-cookie';
 import { SearchForm } from '@/components/Chat/shared/SearchForm';
 import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog } from '@/components/Chat/shared/Dialog';
-
+import { UploadFile } from './components/Chat/shared/UploadFile';
 
 // { children }: { children: React.ReactNode }
 export default function App() {
@@ -21,7 +22,6 @@ export default function App() {
   const [cardPosition, setCardPosition] = useState({ top: '50%', left: '50%' });
   useEffect(() => {
     const sidebarWidth = 150;
-
     // 计算 Card 的位置
     if (isSidebarOpen) {
       // 如果侧边栏打开，Card 位于剩余部分的中间
@@ -37,6 +37,16 @@ export default function App() {
       });
     }
   }, [isSidebarOpen]);
+
+  const [isUploadVisible, setIsUploadVisible] = useState(true);
+
+  const handleUploadClick = () => {
+    setIsUploadVisible(true); // 显示浮窗
+  };
+
+  const handleCloseUpload = () => {
+    setIsUploadVisible(false); // 隐藏浮窗
+  };
 
   return (
     <div>
@@ -56,19 +66,26 @@ export default function App() {
             </Button>
           </header>
 
+          {/* <Card className="fixed top-50 left-100  w-180 h-80 rounded-2xl shadow-md bg-[url('src/assets/dialogBg.jpg')] bg-cover border-0 "> */}
           <Card
-            className="fixed w-180 h-80 rounded-2xl shadow-md bg-[url('src/assets/dialogBg.jpg')] bg-cover border-0"
+            className={`fixed w-180 h-80 rounded-2xl shadow-md bg-[url('src/assets/dialogBg.jpg')] bg-cover border-0 `}
             style={{
               top: cardPosition.top,
               left: cardPosition.left,
               transform: 'translate(-50%, -50%)',
             }}
           >
-            <CardContent className="relative flex justify-center items-center">
+            <CardContent className="relative flex justify-center items-center ">
               <h1 className="absolute top-12 text-xl">Welcome back,name</h1>
-              <Dialog></Dialog>
+              <Dialog handleUploadClick={handleUploadClick}></Dialog>
             </CardContent>
           </Card>
+
+          {isUploadVisible && (
+            <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+              <UploadFile handleCloseUpload={handleCloseUpload} />
+            </div>
+          )}
         </main>
       </SidebarProvider>
     </div>

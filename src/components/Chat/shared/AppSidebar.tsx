@@ -26,9 +26,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarContent>
 
       <SidebarFooter className="flex items-center  mb-5">
-        <Button 
-        className="bg-blue-500 hover:bg-blue-600 w-55 flex items-center text-white rounded-[15px] shadow"
-        onClick={() => navigate('/empty')}>
+        <Button
+          className="bg-blue-500 hover:bg-blue-600 w-55 flex items-center text-white rounded-[15px] shadow"
+          onClick={() => navigate('/empty')}
+        >
           <Plus /> Start new chat
         </Button>
       </SidebarFooter>

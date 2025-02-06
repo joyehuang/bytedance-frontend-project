@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog } from '@/components/Chat/shared/Dialog';
 import { useNavigate } from 'react-router-dom';
-
+import { UploadFile } from '@/components/Chat/shared/UploadFile';
 
 // { children }: { children: React.ReactNode }
 export default function HomePage() {
@@ -40,6 +40,16 @@ export default function HomePage() {
     }
   }, [isSidebarOpen]);
 
+  const [isUploadVisible, setIsUploadVisible] = useState(false);
+
+  const handleUploadClick = () => {
+    setIsUploadVisible(true); // 显示浮窗
+  };
+
+  const handleCloseUpload = () => {
+    setIsUploadVisible(false); // 隐藏浮窗
+  };
+
   return (
     <div>
       <SidebarProvider defaultOpen={defaultOpen}>
@@ -53,13 +63,14 @@ export default function HomePage() {
           <header className="h-18 flex justify-center items-center shadow">
             <Button className="p-1 rounded-[10px] bg-[#F7F8FA] mr-3 h-8 w-13">Coze</Button>
             <SearchForm className="relative" />
-            <Button 
-            className="absolute bg-blue-500 hover:bg-blue-600 w-30 flex justify-center items-center text-white rounded-[15px] shadow ml-340"
-            onClick={() => navigate('/empty')}>
+            <Button
+              className="absolute bg-blue-500 hover:bg-blue-600 w-30 flex justify-center items-center text-white rounded-[15px] shadow ml-340"
+              onClick={() => navigate('/empty')}
+            >
               <Plus /> New chat
             </Button>
           </header>
-        
+
           <Card
             className="fixed w-180 h-80 rounded-2xl shadow-md bg-[url('src/assets/dialogBg.jpg')] bg-cover border-0"
             style={{
@@ -70,9 +81,14 @@ export default function HomePage() {
           >
             <CardContent className="relative flex justify-center items-center">
               <h1 className="absolute top-12 text-xl">Welcome back,name</h1>
-              <Dialog></Dialog>
+              <Dialog handleUploadClick={handleUploadClick}></Dialog>
             </CardContent>
           </Card>
+          {isUploadVisible && (
+            <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+              <UploadFile handleCloseUpload={handleCloseUpload} />
+            </div>
+          )}
         </main>
       </SidebarProvider>
     </div>
