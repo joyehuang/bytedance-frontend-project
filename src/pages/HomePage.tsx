@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog } from '@/components/Chat/shared/Dialog';
 import { useNavigate } from 'react-router-dom';
+import { UploadFile } from '@/components/Chat/shared/UploadFile';
 
 // { children }: { children: React.ReactNode }
 export default function HomePage() {
@@ -38,6 +39,16 @@ export default function HomePage() {
       });
     }
   }, [isSidebarOpen]);
+
+  const [isUploadVisible, setIsUploadVisible] = useState(false);
+
+  const handleUploadClick = () => {
+    setIsUploadVisible(true); // 显示浮窗
+  };
+
+  const handleCloseUpload = () => {
+    setIsUploadVisible(false); // 隐藏浮窗
+  };
 
   return (
     <div>
@@ -70,9 +81,14 @@ export default function HomePage() {
           >
             <CardContent className="relative flex justify-center items-center">
               <h1 className="absolute top-12 text-xl">Welcome back,name</h1>
-              <Dialog></Dialog>
+              <Dialog handleUploadClick={handleUploadClick}></Dialog>
             </CardContent>
           </Card>
+          {isUploadVisible && (
+            <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+              <UploadFile handleCloseUpload={handleCloseUpload} />
+            </div>
+          )}
         </main>
       </SidebarProvider>
     </div>

@@ -6,7 +6,7 @@ interface DialogProps {
   handleUploadClick: () => void;
 }
 
-export function Dialog(props: DialogProps) {
+export function Dialog({ handleUploadClick }: DialogProps) {
   const [textValue, setTextValue] = useState('');
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -18,7 +18,8 @@ export function Dialog(props: DialogProps) {
   };
 
   const uploadFile = () => {
-    props.handleUploadClick();
+    console.log(handleUploadClick);
+    handleUploadClick();
   };
 
   return (

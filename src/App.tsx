@@ -8,7 +8,7 @@ import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog } from '@/components/Chat/shared/Dialog';
-import { UploadFile } from './components/Chat/UploadFile/UploadFile';
+import { UploadFile } from './components/Chat/shared/UploadFile';
 
 // { children }: { children: React.ReactNode }
 export default function App() {
@@ -22,7 +22,6 @@ export default function App() {
   const [cardPosition, setCardPosition] = useState({ top: '50%', left: '50%' });
   useEffect(() => {
     const sidebarWidth = 150;
-
     // 计算 Card 的位置
     if (isSidebarOpen) {
       // 如果侧边栏打开，Card 位于剩余部分的中间
@@ -39,7 +38,7 @@ export default function App() {
     }
   }, [isSidebarOpen]);
 
-  const [isUploadVisible, setIsUploadVisible] = useState(false);
+  const [isUploadVisible, setIsUploadVisible] = useState(true);
 
   const handleUploadClick = () => {
     setIsUploadVisible(true); // 显示浮窗
