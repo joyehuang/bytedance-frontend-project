@@ -76,8 +76,14 @@ export default function App() {
             }}
           >
             <CardContent className="relative flex justify-center items-center ">
-              <h1 className="absolute top-12 text-xl">Welcome back,name</h1>
-              <Dialog handleUploadClick={handleUploadClick}></Dialog>
+              <h1 className="absolute top-12 text-xl">Welcome back, name</h1>
+              <Dialog
+                handleUploadClick={handleUploadClick}
+                onSendMessage={(message) => {
+                  console.log('Message sent:', message);
+                  // Add logic to handle the message, e.g., update state or navigate
+                }}
+              />
             </CardContent>
           </Card>
 
