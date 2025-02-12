@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { AppSidebar } from '@/components/Chat/shared/AppSidebar';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import Cookies from 'js-cookie';
-import { SearchForm } from '@/components/Chat/shared/SearchForm';
 import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -12,7 +11,7 @@ import { UploadFile } from '@/components/Chat/shared/UploadFile';
 import { useChatSessionStore } from '@/store/chatSessionStore';
 import { ChatSession } from '@/types/chat';
 import ChatSessionManager from '@/components/Chat/ChatSessionManager';
-
+import { CollapsedInput } from '@/components/Chat/InlineChat/CollapsedInput';
 // { children }: { children: React.ReactNode }
 export default function HomePage() {
   const navigate = useNavigate();
@@ -88,7 +87,8 @@ export default function HomePage() {
           />
           <header className="h-18 flex justify-center items-center shadow">
             <Button className="p-1 rounded-[10px] bg-[#F7F8FA] mr-3 h-8 w-13">Coze</Button>
-            <SearchForm className="relative" />
+            {/* SearchForm换成了CollapsedInput */}
+            <CollapsedInput />
             <Button
               className="absolute bg-blue-500 hover:bg-blue-600 w-30 flex justify-center items-center text-white rounded-[15px] shadow ml-340"
               onClick={() => navigate('/empty')}
