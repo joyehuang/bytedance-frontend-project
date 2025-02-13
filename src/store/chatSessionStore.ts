@@ -6,6 +6,7 @@ interface ChatSessionStore {
   addSession: (session: ChatSession) => void;
   currentSessionId: string | null;
   setCurrentSession: (id: string) => void;
+  clearCurrentSession: () => void;
 }
 
 export const useChatSessionStore = create<ChatSessionStore>((set) => ({
@@ -17,4 +18,5 @@ export const useChatSessionStore = create<ChatSessionStore>((set) => ({
       currentSessionId: session.id,
     })),
   setCurrentSession: (id) => set({ currentSessionId: id }),
+  clearCurrentSession: () => set({ currentSessionId: null }),
 }));

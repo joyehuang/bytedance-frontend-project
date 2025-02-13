@@ -2,9 +2,6 @@ import { useState, useEffect } from 'react';
 import { AppSidebar } from '@/components/Chat/shared/AppSidebar';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import Cookies from 'js-cookie';
-import { SearchForm } from '@/components/Chat/shared/SearchForm';
-import { Plus } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog } from '@/components/Chat/shared/Dialog';
 import { useNavigate } from 'react-router-dom';
@@ -12,17 +9,19 @@ import { UploadFile } from '@/components/Chat/shared/UploadFile';
 import { useChatSessionStore } from '@/store/chatSessionStore';
 import { ChatSession } from '@/types/chat';
 import ChatSessionManager from '@/components/Chat/ChatSessionManager';
+import { TopBar } from '@/components/Chat/shared/TopBar';
 
-// { children }: { children: React.ReactNode }
 export default function HomePage() {
   const navigate = useNavigate();
   const cookieValue = Cookies.get('sidebar:state');
   const defaultOpen = cookieValue === 'true';
   const [isSidebarOpen, setIsSidebarOpen] = useState(defaultOpen);
+
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
     Cookies.set('sidebar:state', !isSidebarOpen ? 'true' : 'false');
   };
+
   const [cardPosition, setCardPosition] = useState({ top: '50%', left: '50%' });
   useEffect(() => {
     const sidebarWidth = 150;
@@ -78,25 +77,20 @@ export default function HomePage() {
     <div>
       <SidebarProvider defaultOpen={defaultOpen}>
         <AppSidebar className="relative">
+          <div className="absolute top-4 right-4">
+            <SidebarTrigger
+              className={`${
+                isSidebarOpen
+                  ? 'text-gray-500 hover:bg-gray-200 w-8 h-8 flex items-center justify-center'
+                  : 'fixed left-4 top-4 z-50 text-gray-500 hover:bg-gray-200 w-8 h-8 flex items-center justify-center'
+              } transition-all duration-300 ease-in-out [&>svg]:w-5 [&>svg]:h-5`}
+              onClick={toggleSidebar}
+            />
+          </div>
           <ChatSessionManager />
         </AppSidebar>
-        <main className=" w-full  h-full">
-          <SidebarTrigger
-            className={`absolute ${isSidebarOpen ? 'left-[300px]' : 'left-[30px]'} hover:bg-gray-300 mt-6 scale-115 transition-all duration-300 ease-in-out`}
-            onClick={toggleSidebar}
-            color="gray"
-          />
-          <header className="h-18 flex justify-center items-center shadow">
-            <Button className="p-1 rounded-[10px] bg-[#F7F8FA] mr-3 h-8 w-13">Coze</Button>
-            <SearchForm className="relative" />
-            <Button
-              className="absolute bg-blue-500 hover:bg-blue-600 w-30 flex justify-center items-center text-white rounded-[15px] shadow ml-340"
-              onClick={() => navigate('/empty')}
-            >
-              <Plus /> New chat
-            </Button>
-          </header>
-
+        <main className="w-full h-full">
+          <TopBar isSidebarOpen={isSidebarOpen} />
           <Card
             className="fixed w-180 h-80 rounded-2xl shadow-md bg-[url('src/assets/dialogBg.jpg')] bg-cover border-0"
             style={{
@@ -106,7 +100,7 @@ export default function HomePage() {
             }}
           >
             <CardContent className="relative flex justify-center items-center">
-              <h1 className="absolute top-12 text-xl">Welcome back,name</h1>
+              <h1 className="absolute top-12 text-xl">Welcome back, Name</h1>
               <Dialog handleUploadClick={handleUploadClick} onSendMessage={handleSendMessage} />
             </CardContent>
           </Card>
