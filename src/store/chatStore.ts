@@ -130,7 +130,7 @@ export const useChatStore = create<InlineChatState>((set, get) => ({
 
     addMessage(currentSessionId, userMessage);
 
-    // TODO: 接入 Coze API
+    // TODO: 接入 Claude API
     // 模拟助手回复
     const assistantMessage: Message = {
       id: (Date.now() + 1).toString(),
