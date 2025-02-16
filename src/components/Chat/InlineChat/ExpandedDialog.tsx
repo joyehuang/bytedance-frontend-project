@@ -10,12 +10,17 @@ interface ExpandedDialogProps {
   // messages: Message[];
   isVisible: boolean;
   onClose: () => void;
+  className?: string;
   inputW?: string;
   // onSend: (content: string) => void;
   // onUpload?: (files: File[]) => void;
 }
 
-export const ExpandedDialog: React.FC<ExpandedDialogProps> = ({ isVisible, onClose }) => {
+export const ExpandedDialog: React.FC<ExpandedDialogProps> = ({
+  isVisible,
+  onClose,
+  className,
+}) => {
   const [isMinimized, setIsMinimized] = useState(false);
   const handleMiniDialog = () => {
     setIsMinimized(true);
@@ -23,7 +28,9 @@ export const ExpandedDialog: React.FC<ExpandedDialogProps> = ({ isVisible, onClo
   };
   if (!isVisible) return null;
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black/5 z-50">
+    <div
+      className={`fixed inset-0 flex items-center justify-center bg-black/5 z-50 ${className || ''}`}
+    >
       <div className="w-[520px] h-[580px] bg-white rounded-lg shadow-lg relative overflow-hidden">
         <Card className="h-full flex flex-col border-none">
           {/* 头部 */}
