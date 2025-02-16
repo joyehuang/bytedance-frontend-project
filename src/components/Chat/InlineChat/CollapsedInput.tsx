@@ -1,12 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { SearchForm } from '../shared/SearchForm';
+import { ExpandedDialog } from './ExpandedDialog';
 
 export interface CollapsedInputProps {
-  onExpand: () => void;
   placeholder?: string;
 }
 
 export const CollapsedInput: React.FC<CollapsedInputProps> = () => {
-  return <div>CollapsedInput Component</div>;
-};
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const handleClose = () => {
+    setIsPopupVisible(false);
+  };
 
-export default CollapsedInput;
+  const handleSearchFocus = () => {
+    setIsPopupVisible(true);
+  };
+
+  return (
+    <div>
+      <div>
+        <SearchForm className="expand-input" inputW="w-56" onFocus={handleSearchFocus} />
+      </div>
+      <ExpandedDialog isVisible={isPopupVisible} onClose={handleClose} />
+    </div>
+  );
+};

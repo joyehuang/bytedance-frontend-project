@@ -26,7 +26,7 @@ export function AppSidebar({ children, ...props }: AppSidebarProps) {
       </SidebarHeader>
 
       <SidebarContent className="flex flex-col h-full">
-        <SearchForm className="p-2" />
+        <SearchForm className="p-2" inputW="w-56" />
         {/* 在这里渲染 ChatSessionManager */}
         {children}
       </SidebarContent>
