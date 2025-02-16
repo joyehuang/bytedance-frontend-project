@@ -2,14 +2,14 @@ import { Button } from '@/components/ui/button';
 import { File, X } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { useFileStore } from '@/store/uploadedFileStore';
+import { uploadFiles } from '@/utils/filesUtil';
 import React from 'react';
 interface UploadFileProps {
   handleCloseUpload: () => void; // 关闭浮窗的回调函数
 }
 
 export function UploadFile(props: UploadFileProps) {
-  const { files, addFile, convertFileToUploadedFile, uploadFileRequest, uploadFiles } =
-    useFileStore();
+  const { files } = useFileStore();
   const { handleCloseUpload } = props;
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -48,21 +48,7 @@ export function UploadFile(props: UploadFileProps) {
     const basicFiles = e.dataTransfer.files;
     if (basicFiles && basicFiles.length > 0) {
       // 在这里处理文件上传逻辑
-      for (let file of basicFiles) {
-        const uploadedFile = convertFileToUploadedFile(file);
-        console.log('选择的文件:', uploadedFile);
-        const uploadedFileId = uploadedFile.id;
-        addFile(uploadedFile);
-        const url = await uploadFileRequest(file);
-        if (url !== '') {
-          //有url说明上传成功
-          const updatedFiles = useFileStore.getState().files;
-          console.log(updatedFiles);
-          const uploadedFile = updatedFiles.filter((item) => item.id === uploadedFileId);
-          uploadedFile[0].id = uploadedFileId;
-          console.log('成功赋值url');
-        }
-      }
+      uploadFiles(basicFiles);
     }
     console.log(files);
   };
