@@ -7,6 +7,7 @@ import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog } from '@/components/Chat/shared/Dialog';
 import { useNavigate } from 'react-router-dom';
+import { UploadFile } from '@/components/Chat/shared/UploadFile';
 
 export default function ChatPage() {
   const navigate = useNavigate();
@@ -40,6 +41,16 @@ export default function ChatPage() {
     }
   }, [isSidebarOpen]);
 
+  const [isUploadVisible, setIsUploadVisible] = useState(false);
+
+  const handleUploadClick = () => {
+    setIsUploadVisible(true); // 显示浮窗
+  };
+
+  const handleCloseUpload = () => {
+    setIsUploadVisible(false); // 隐藏浮窗
+  };
+
   return (
     <div>
       <SidebarProvider defaultOpen={defaultOpen}>
@@ -71,9 +82,14 @@ export default function ChatPage() {
               }}
             >
               <div className="flex justify-center items-center translate-y-[35px]">
-                <Dialog />
+                <Dialog handleUploadClick={handleUploadClick} />
               </div>
             </div>
+            {isUploadVisible && (
+              <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+                <UploadFile handleCloseUpload={handleCloseUpload} />
+              </div>
+            )}
           </main>
         </div>
       </SidebarProvider>

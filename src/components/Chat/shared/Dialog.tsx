@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Paperclip, Image, Send } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
+import { UploadedFileList } from '@/components/Chat/shared/UploadedFilesList';
+import { useFileStore } from '@/store/uploadedFileStore';
 
 interface DialogProps {
   handleUploadClick: () => void;
@@ -9,6 +11,7 @@ interface DialogProps {
 export function Dialog({ handleUploadClick }: DialogProps) {
   const [textValue, setTextValue] = useState('');
 
+  const { files } = useFileStore();
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextValue(event.target.value); // 更新状态
   };
@@ -31,6 +34,13 @@ export function Dialog({ handleUploadClick }: DialogProps) {
         value={textValue}
         onChange={handleChange}
       />
+      {files.length > 0 && (
+        <div>
+          <hr className="my-3 border border-gray-200" />
+          <UploadedFileList />
+        </div>
+      )}
+
       <hr className="my-3 border border-gray-200" />
       <div className="flex justify-between items-center ">
         <div className="flex space-x-3 ">
