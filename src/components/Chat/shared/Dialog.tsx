@@ -3,13 +3,16 @@ import { Paperclip, Image, Send } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 import { UploadedFileList } from '@/components/Chat/shared/UploadedFilesList';
 import { useFileStore } from '@/store/uploadedFileStore';
+import { useNavigate } from 'react-router-dom';
 
 interface DialogProps {
+  onSendMessage: (message: string) => void;
   handleUploadClick: () => void;
 }
 
-export function Dialog({ handleUploadClick }: DialogProps) {
+export function Dialog({ handleUploadClick, onSendMessage }: DialogProps) {
   const [textValue, setTextValue] = useState('');
+  const navigate = useNavigate();
 
   const { files } = useFileStore();
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -18,6 +21,11 @@ export function Dialog({ handleUploadClick }: DialogProps) {
 
   const handleClick = () => {
     console.log(textValue);
+    if (textValue.trim()) {
+      onSendMessage(textValue); // Use the onSendMessage prop
+      setTextValue(''); // Clear the textarea after sending
+      navigate('/chat'); // Add navigation to chat page
+    }
   };
 
   const uploadFile = () => {

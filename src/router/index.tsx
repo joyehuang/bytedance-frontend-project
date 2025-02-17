@@ -11,7 +11,7 @@ const router = createBrowserRouter([
     element: <HomePage />,
   },
   {
-    path: '/empty',
+    path: '/chat',
     element: <ChatPage />,
   },
 ]);

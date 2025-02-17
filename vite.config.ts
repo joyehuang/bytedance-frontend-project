@@ -23,4 +23,8 @@ export default defineConfig({
       'next/headers': 'next/dist/client/components/headers.js',
     },
   },
+  assetsInclude: ['**/*.jpg', '**/*.png', '**/*.gif', '**/*.svg'],
+  build: {
+    assetsInlineLimit: 4096,
+  },
 });

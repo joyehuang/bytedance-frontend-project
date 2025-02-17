@@ -3,6 +3,10 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "engines": {
+    "node": ">=16",
+    "pnpm": ">=8"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -10,10 +14,11 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,css,scss,md}\"",
-    "prepare": "husky install",
-    "test-api": "tsx src/lib/api.ts"
+    "test-api": "tsx src/lib/api.ts",
+    "postinstall": "[ \"$NODE_ENV\" != \"production\" ] && husky install || echo \"skipping husky\""
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.36.3",
     "@radix-ui/react-dialog": "^1.1.5",
     "@radix-ui/react-label": "^2.1.1",
     "@radix-ui/react-separator": "^1.1.1",
@@ -23,6 +28,7 @@
     "axios": "^1.7.9",
     "class-variance-authority": "^0.7.1",
     "cmdk": "1.0.0",
+    "dotenv": "^16.4.7",
     "esbuild": "^0.24.2",
     "immer": "^10.1.1",
     "js-cookie": "^3.0.5",

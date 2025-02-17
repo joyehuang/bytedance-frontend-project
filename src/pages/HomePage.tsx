@@ -2,14 +2,16 @@ import { useState, useEffect } from 'react';
 import { AppSidebar } from '@/components/Chat/shared/AppSidebar';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import Cookies from 'js-cookie';
-import { SearchForm } from '@/components/Chat/shared/SearchForm';
 import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog } from '@/components/Chat/shared/Dialog';
 import { useNavigate } from 'react-router-dom';
 import { UploadFile } from '@/components/Chat/shared/UploadFile';
-
+import { useChatSessionStore } from '@/store/chatSessionStore';
+import { ChatSession } from '@/types/chat';
+import ChatSessionManager from '@/components/Chat/ChatSessionManager';
+import { CollapsedInput } from '@/components/Chat/InlineChat/CollapsedInput';
 // { children }: { children: React.ReactNode }
 export default function HomePage() {
   const navigate = useNavigate();
@@ -50,10 +52,33 @@ export default function HomePage() {
     setIsUploadVisible(false); // 隐藏浮窗
   };
 
+  const addSession = useChatSessionStore((state) => state.addSession);
+
+  const handleSendMessage = (message: string) => {
+    // 创建新会话
+    const newSession: ChatSession = {
+      id: Date.now().toString(),
+      title: message.slice(0, 20) + (message.length > 20 ? '...' : ''), // 使用消息前20个字符作为标题
+      lastTime: Date.now(),
+      messages: [
+        {
+          id: Date.now().toString(),
+          content: message,
+          role: 'user',
+          timestamp: Date.now(),
+        },
+      ],
+    };
+    addSession(newSession);
+    navigate('/chat'); // 创建会话后跳转到聊天页面
+  };
+
   return (
     <div>
       <SidebarProvider defaultOpen={defaultOpen}>
-        <AppSidebar className="relative" />
+        <AppSidebar className="relative">
+          <ChatSessionManager />
+        </AppSidebar>
         <main className=" w-full  h-full">
           <SidebarTrigger
             className={`absolute ${isSidebarOpen ? 'left-[300px]' : 'left-[30px]'} hover:bg-gray-300 mt-6 scale-115 transition-all duration-300 ease-in-out`}
@@ -62,7 +87,8 @@ export default function HomePage() {
           />
           <header className="h-18 flex justify-center items-center shadow">
             <Button className="p-1 rounded-[10px] bg-[#F7F8FA] mr-3 h-8 w-13">Coze</Button>
-            <SearchForm className="relative" />
+            {/* SearchForm换成了CollapsedInput */}
+            <CollapsedInput />
             <Button
               className="absolute bg-blue-500 hover:bg-blue-600 w-30 flex justify-center items-center text-white rounded-[15px] shadow ml-340"
               onClick={() => navigate('/empty')}
@@ -81,7 +107,7 @@ export default function HomePage() {
           >
             <CardContent className="relative flex justify-center items-center">
               <h1 className="absolute top-12 text-xl">Welcome back,name</h1>
-              <Dialog handleUploadClick={handleUploadClick}></Dialog>
+              <Dialog handleUploadClick={handleUploadClick} onSendMessage={handleSendMessage} />
             </CardContent>
           </Card>
           {isUploadVisible && (

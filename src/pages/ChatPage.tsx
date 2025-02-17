@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog } from '@/components/Chat/shared/Dialog';
 import { useNavigate } from 'react-router-dom';
 import { UploadFile } from '@/components/Chat/shared/UploadFile';
+import ChatSessionManager from '@/components/Chat/ChatSessionManager';
 
 export default function ChatPage() {
   const navigate = useNavigate();
@@ -54,7 +55,9 @@ export default function ChatPage() {
   return (
     <div>
       <SidebarProvider defaultOpen={defaultOpen}>
-        <AppSidebar className="relative" />
+        <AppSidebar className="relative">
+          <ChatSessionManager />
+        </AppSidebar>
         <SidebarTrigger
           className={`absolute ${isSidebarOpen ? 'left-[300px]' : 'left-[30px]'} hover:bg-gray-300 mt-6 scale-115 transition-all duration-300 ease-in-out`}
           onClick={toggleSidebar}
@@ -82,7 +85,16 @@ export default function ChatPage() {
               }}
             >
               <div className="flex justify-center items-center translate-y-[35px]">
-                <Dialog handleUploadClick={handleUploadClick} />
+                {/* <Dialog handleUploadClick={handleUploadClick} /> */}
+                <Dialog
+                  handleUploadClick={handleUploadClick}
+                  onSendMessage={(message) => {
+                    // 处理发送消息事件
+                    console.log('Message sent:', message);
+                    // 这里添加逻辑来处理发送的消息
+                    navigate('/chat');
+                  }}
+                />
               </div>
             </div>
             {isUploadVisible && (
