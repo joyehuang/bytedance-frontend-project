@@ -50,13 +50,19 @@ export function Dialog({ handleUploadClick, onSendMessage }: DialogProps) {
       )}
 
       <hr className="my-3 border border-gray-200" />
-      <div className="flex justify-between items-center ">
-        <div className="flex space-x-3 ">
+      <div className="flex justify-between items-center">
+        <div className="flex space-x-3">
           <Paperclip className="cursor-pointer text-gray-500 scale-80" onClick={uploadFile} />
           <Image className="cursor-pointer text-gray-500 scale-80" />
         </div>
         <button
           className="bg-blue-500 text-white px-4 py-2 rounded-[12px] hover:bg-blue-600 flex items-center text-sm shadow scale-85"
+          style={{
+            background: 'linear-gradient(180deg, #2B7AFB 0%, #2174FD 100%, #213BFD 100%)',
+            boxShadow:
+              '0px 2px 5px rgba(20, 88, 201, 0.17), inset 0px -2px 0.3px rgba(14, 56, 125, 0.18), inset 0px 2px 1px rgba(255, 255, 255, 0.22)',
+            boxSizing: 'border-box',
+          }}
           onClick={handleClick}
         >
           <Send className="mr-1 scale-70" />

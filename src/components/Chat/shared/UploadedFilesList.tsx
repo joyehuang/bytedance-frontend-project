@@ -49,9 +49,9 @@ const UploadedFileItem = React.memo(({ file }: UploadedFileProps) => {
     removeFile(id);
   };
   // console.log('color', nameColor)
-  console.log('UploadedFileItem组件渲染了', type);
+  // console.log('UploadedFileItem组件渲染了', type);
   const handlePreview = () => {
-    console.log(url);
+    // console.log(url);
     window.open(url);
   };
   return (

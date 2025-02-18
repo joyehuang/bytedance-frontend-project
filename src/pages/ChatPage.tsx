@@ -2,13 +2,11 @@ import { useState, useEffect } from 'react';
 import { AppSidebar } from '@/components/Chat/shared/AppSidebar';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import Cookies from 'js-cookie';
-import { SearchForm } from '@/components/Chat/shared/SearchForm';
-import { Plus } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { Dialog } from '@/components/Chat/shared/Dialog';
 import { useNavigate } from 'react-router-dom';
 import { UploadFile } from '@/components/Chat/shared/UploadFile';
 import ChatSessionManager from '@/components/Chat/ChatSessionManager';
+import { TopBar } from '@/components/Chat/shared/TopBar';
 
 export default function ChatPage() {
   const navigate = useNavigate();
@@ -53,57 +51,54 @@ export default function ChatPage() {
   };
 
   return (
-    <div>
+    <div className="h-screen w-screen overflow-hidden">
       <SidebarProvider defaultOpen={defaultOpen}>
         <AppSidebar className="relative">
           <ChatSessionManager />
+          <div className="absolute top-4 right-4">
+            <SidebarTrigger
+              className={`${
+                isSidebarOpen
+                  ? 'text-gray-500 hover:bg-gray-200 w-8 h-8 flex items-center justify-center'
+                  : 'fixed left-4 top-4 z-50 text-gray-500 hover:bg-gray-200 w-8 h-8 flex items-center justify-center'
+              } transition-all duration-300 ease-in-out [&>svg]:w-5 [&>svg]:h-5`}
+              onClick={toggleSidebar}
+            />
+          </div>
         </AppSidebar>
-        <SidebarTrigger
-          className={`absolute ${isSidebarOpen ? 'left-[300px]' : 'left-[30px]'} hover:bg-gray-300 mt-6 scale-115 transition-all duration-300 ease-in-out`}
-          onClick={toggleSidebar}
-          color="gray"
-        />
-        <div className="flex flex-col h-screen w-full">
-          <header className="h-18 flex justify-center items-center shadow ">
-            <Button className="p-1 rounded-[10px] bg-[#F7F8FA] mr-3 h-8 w-13">Coze</Button>
-            <SearchForm className="relative" />
-            <Button
-              className="absolute bg-blue-500 hover:bg-blue-600 w-30 flex justify-center items-center text-white rounded-[15px] shadow ml-340"
-              onClick={() => navigate('/empty')}
-            >
-              <Plus /> New chat
-            </Button>
-          </header>
-          <main className="flex-1 w-full  relative bg-[url('src/assets/dialogBg.jpg')] bg-cover">
-            <div
-              className=" flex justify-center items-center w-200 h-full "
-              style={{
-                position: 'absolute',
-                top: chatPosition.top,
-                left: chatPosition.left,
-                transform: 'translate(-50%, -50%)',
-              }}
-            >
-              <div className="flex justify-center items-center translate-y-[35px]">
-                {/* <Dialog handleUploadClick={handleUploadClick} /> */}
-                <Dialog
-                  handleUploadClick={handleUploadClick}
-                  onSendMessage={(message) => {
-                    // 处理发送消息事件
-                    console.log('Message sent:', message);
-                    // 这里添加逻辑来处理发送的消息
-                    navigate('/chat');
-                  }}
-                />
+        <main className="w-full h-full">
+          <TopBar isSidebarOpen={isSidebarOpen} />
+          <div className="flex flex-col h-[calc(100vh-4rem)] w-full">
+            <main className="flex-1 w-full relative bg-[url('src/assets/dialogBg.jpg')] bg-cover">
+              <div
+                className="flex justify-center items-center w-200 h-full"
+                style={{
+                  position: 'absolute',
+                  top: chatPosition.top,
+                  left: chatPosition.left,
+                  transform: 'translate(-50%, -50%)',
+                }}
+              >
+                <div className="flex justify-center items-center translate-y-[35px]">
+                  <Dialog
+                    handleUploadClick={() => {
+                      handleUploadClick();
+                    }}
+                    onSendMessage={(message) => {
+                      console.log('Message sent:', message);
+                      navigate('/chat');
+                    }}
+                  />
+                </div>
               </div>
+            </main>
+          </div>
+          {isUploadVisible && (
+            <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+              <UploadFile handleCloseUpload={handleCloseUpload} />
             </div>
-            {isUploadVisible && (
-              <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
-                <UploadFile handleCloseUpload={handleCloseUpload} />
-              </div>
-            )}
-          </main>
-        </div>
+          )}
+        </main>
       </SidebarProvider>
     </div>
   );

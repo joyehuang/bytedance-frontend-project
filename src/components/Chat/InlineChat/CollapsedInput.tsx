@@ -17,11 +17,19 @@ export const CollapsedInput: React.FC<CollapsedInputProps> = () => {
   };
 
   return (
-    <div>
+    <div className="relative z-50">
       <div>
-        <SearchForm className="expand-input" inputW="w-56" onFocus={handleSearchFocus} />
+        <SearchForm
+          className="expand-input"
+          inputW="w-56"
+          onFocus={handleSearchFocus}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleSearchFocus();
+          }}
+        />
       </div>
-      <ExpandedDialog isVisible={isPopupVisible} onClose={handleClose} />
+      <ExpandedDialog isVisible={isPopupVisible} onClose={handleClose} className="z-[100]" />
     </div>
   );
 };
