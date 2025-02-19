@@ -4,6 +4,7 @@ import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import Cookies from 'js-cookie';
 import { Dialog } from '@/components/Chat/shared/Dialog';
 import { useNavigate } from 'react-router-dom';
+import { UploadFile } from '@/components/Chat/shared/UploadFile';
 import ChatSessionManager from '@/components/Chat/ChatSessionManager';
 import { TopBar } from '@/components/Chat/shared/TopBar';
 
@@ -39,6 +40,16 @@ export default function ChatPage() {
     }
   }, [isSidebarOpen]);
 
+  const [isUploadVisible, setIsUploadVisible] = useState(false);
+
+  const handleUploadClick = () => {
+    setIsUploadVisible(true); // 显示浮窗
+  };
+
+  const handleCloseUpload = () => {
+    setIsUploadVisible(false); // 隐藏浮窗
+  };
+
   return (
     <div className="h-screen w-screen overflow-hidden">
       <SidebarProvider defaultOpen={defaultOpen}>
@@ -71,7 +82,7 @@ export default function ChatPage() {
                 <div className="flex justify-center items-center translate-y-[35px]">
                   <Dialog
                     handleUploadClick={() => {
-                      console.log('Upload clicked');
+                      handleUploadClick();
                     }}
                     onSendMessage={(message) => {
                       console.log('Message sent:', message);
@@ -82,6 +93,11 @@ export default function ChatPage() {
               </div>
             </main>
           </div>
+          {isUploadVisible && (
+            <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center">
+              <UploadFile handleCloseUpload={handleCloseUpload} />
+            </div>
+          )}
         </main>
       </SidebarProvider>
     </div>

@@ -84,3 +84,14 @@ export interface SearchBarProps {
   onClear: () => void;
   placeholder?: string;
 }
+
+export interface UploadedFile {
+  id: string; // 文件唯一标识
+  name: string; // 文件名
+  size: string; // 文件大小（字节）
+  type: string; // 文件类型
+  uploadedAt: string;
+  url?: string; //上传之后的url
+  success: boolean; //是否上传成功
+  status: 'uploading' | 'success' | 'error';
+}

@@ -1,12 +1,16 @@
 import { Button } from '@/components/ui/button';
 import { File, X } from 'lucide-react';
 import { useRef, useState } from 'react';
+import { useFileStore } from '@/store/uploadedFileStore';
+import { uploadFiles } from '@/utils/filesUtil';
 import React from 'react';
 interface UploadFileProps {
   handleCloseUpload: () => void; // 关闭浮窗的回调函数
 }
 
 export function UploadFile(props: UploadFileProps) {
+  const { files } = useFileStore();
+  const { handleCloseUpload } = props;
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const handleClick = () => {
@@ -15,15 +19,17 @@ export function UploadFile(props: UploadFileProps) {
   };
 
   const onClose = () => {
-    props.handleCloseUpload();
+    handleCloseUpload();
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (files && files.length > 0) {
-      console.log('选择的文件:', files);
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const basicFiles = e.target.files;
+    handleCloseUpload();
+    if (basicFiles && basicFiles.length > 0) {
       // 在这里处理文件上传逻辑
+      uploadFiles(basicFiles);
     }
+    console.log(files);
   };
 
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
@@ -38,11 +44,12 @@ export function UploadFile(props: UploadFileProps) {
   const handleDrop = async (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     setIsDragging(false);
-
-    const files = e.dataTransfer.files;
-    // if (files && files.length > 0) {
-    //     await uploadFiles(files);
-    // }
+    handleCloseUpload(); //关闭窗口
+    const basicFiles = e.dataTransfer.files;
+    if (basicFiles && basicFiles.length > 0) {
+      // 在这里处理文件上传逻辑
+      uploadFiles(basicFiles);
+    }
     console.log(files);
   };
   return (
