@@ -7,6 +7,7 @@ import React from 'react';
 interface UploadedFileProps {
   file: UploadedFile;
   key: string;
+  removeFile: (id: string) => void;
 }
 
 const StatusIcon = ({ status }: { status: UploadedFile['status'] }) => {
@@ -41,9 +42,8 @@ const FileDetail = React.memo(
   }
 );
 FileDetail.displayName = 'fileDetail';
-const UploadedFileItem = React.memo(({ file }: UploadedFileProps) => {
+const UploadedFileItem = React.memo(({ file, removeFile }: UploadedFileProps) => {
   const { id, name, type, url, status, size } = file;
-  const { removeFile } = useFileStore();
   const nameColor = useMemo(() => {
     return status === 'error' ? 'text-red-800' : 'text-grey-800';
   }, [status]);
@@ -84,9 +84,10 @@ const UploadedFileItem = React.memo(({ file }: UploadedFileProps) => {
 UploadedFileItem.displayName = 'UploadedFileItem'; // 添加 displayName
 
 export function UploadedFileList() {
-  const { files } = useFileStore();
+  const { files, removeFile } = useFileStore();
   const renderedFiles = useCallback(
-    () => files.map((file) => <UploadedFileItem key={file.id} file={file} />),
+    () =>
+      files.map((file) => <UploadedFileItem key={file.id} file={file} removeFile={removeFile} />),
     [files]
   );
   return (
