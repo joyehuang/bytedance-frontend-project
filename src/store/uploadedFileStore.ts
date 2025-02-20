@@ -1,7 +1,7 @@
 import { create } from 'zustand';
-// import {immer} from 'zustand/middleware/immer'
-// import { produce } from 'immer';
+import { produce } from 'immer';
 import { UploadedFile } from '@/types/chat';
+
 interface FileStore {
   files: UploadedFile[];
   addFile: (file: UploadedFile) => void;
@@ -9,23 +9,34 @@ interface FileStore {
   updateFileStatus: (id: string, status: 'success' | 'error', url?: string) => void;
 }
 
-export const useFileStore = create<FileStore>((set) => {
-  return {
+export const useFileStore = create<FileStore>(
+  // 使用 Immer middleware
+  (set) => ({
     files: [],
-    addFile: (file) => set((state) => ({ files: [...state.files, file] })),
-    removeFile: (id) => set((state) => ({ files: state.files.filter((f) => f.id !== id) })),
+    addFile: (file) =>
+      set(
+        produce((state) => {
+          state.files.push(file);
+        })
+      ),
+    removeFile: (id) =>
+      set(
+        produce((state) => {
+          state.files = state.files.filter((f) => f.id !== id);
+        })
+      ),
     updateFileStatus: (id, status, url) =>
-      set((state) => ({
-        files: state.files.map((file) =>
-          file.id === id
-            ? {
-                ...file,
-                status,
-                url,
-                success: url === '' ? false : true,
-              }
-            : file
-        ),
-      })),
-  };
-});
+      set(
+        produce((state) => {
+          const fileIndex = state.files.findIndex((f) => f.id === id);
+          if (fileIndex !== -1) {
+            state.files[fileIndex] = {
+              ...state.files[fileIndex],
+              status,
+              url: url || state.files[fileIndex].url,
+            };
+          }
+        })
+      ),
+  })
+);

@@ -1,7 +1,7 @@
 import { File, X, Loader2 } from 'lucide-react';
 import { useFileStore } from '@/store/uploadedFileStore';
 import { UploadedFile } from '@/types/chat';
-import { useMemo } from 'react';
+import { useMemo, useCallback } from 'react';
 import React from 'react';
 
 interface UploadedFileProps {
@@ -22,14 +22,9 @@ const StatusIcon = ({ status }: { status: UploadedFile['status'] }) => {
   return <div>{Icon}</div>;
 };
 
-const UploadedFileItem = React.memo(({ file }: UploadedFileProps) => {
-  const { id, name, type, url, status, size } = file;
-  const { removeFile } = useFileStore();
-  const nameColor = useMemo(() => {
-    return status === 'error' ? 'text-red-800' : 'text-grey-800';
-  }, [status]);
-
-  const FileDetail = ({ type, size, status }: { type: string; size: string; status: string }) => {
+const FileDetail = React.memo(
+  ({ type, size, status }: { type: string; size: string; status: string }) => {
+    // console.log('FileDetail重新渲染了', status)
     if (status === 'uploading') {
       return <span className="text-xs text-gray-500">文件上传中</span>;
     } else if (status === 'error') {
@@ -41,15 +36,24 @@ const UploadedFileItem = React.memo(({ file }: UploadedFileProps) => {
           <span className="text-xs text-gray-500 ml-2">{size}</span>
         </div>
       );
-    } else {
-      return null; // 如果状态未知，不显示任何内容
     }
-  };
-  const deleteHandler = () => {
+    return null;
+  }
+);
+FileDetail.displayName = 'fileDetail';
+const UploadedFileItem = React.memo(({ file }: UploadedFileProps) => {
+  const { id, name, type, url, status, size } = file;
+  const { removeFile } = useFileStore();
+  const nameColor = useMemo(() => {
+    return status === 'error' ? 'text-red-800' : 'text-grey-800';
+  }, [status]);
+
+  console.log(`${name}渲染了`);
+
+  const deleteHandler = useCallback(() => {
     removeFile(id);
-  };
-  // console.log('color', nameColor)
-  // console.log('UploadedFileItem组件渲染了', type);
+  }, [id, removeFile]);
+
   const handlePreview = () => {
     // console.log(url);
     window.open(url);
@@ -81,16 +85,13 @@ UploadedFileItem.displayName = 'UploadedFileItem'; // 添加 displayName
 
 export function UploadedFileList() {
   const { files } = useFileStore();
-  const memoizedFiles = useMemo(() => {
-    return files;
-  }, [files]);
+  const renderedFiles = useCallback(
+    () => files.map((file) => <UploadedFileItem key={file.id} file={file} />),
+    [files]
+  );
   return (
     <div className="relative w-full max-w-2xl mx-auto p-1 border border-gray-200 rounded-lg bg-white shadow-sm overflow-y-auto max-h-56">
-      <div className="flex flex-wrap">
-        {memoizedFiles.map((file) => (
-          <UploadedFileItem file={file} key={file.id} />
-        ))}
-      </div>
+      <div className="flex flex-wrap">{renderedFiles()}</div>
     </div>
   );
 }
